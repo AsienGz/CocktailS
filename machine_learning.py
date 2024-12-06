@@ -11,20 +11,22 @@ import requests
 import os
 
 # Function to fetch cocktail recipe
+
 def get_cocktail_recipe(cocktail_name):
     API_KEY = '9973533'  # API Key Pro Version
-    BASE_URL = f"https://www.thecocktaildb.com/api/json/v2/{API_KEY}/search.php?s={cocktail_name}"
-    response = requests.get(BASE_URL)
-    if response.status_code == 200:
-        data = response.json()
+    BASE_URL = f"https://www.thecocktaildb.com/api/json/v2/{API_KEY}/search.php?s={cocktail_name}" #API Pro Version URL
+    response = requests.get(BASE_URL) # Making the API request
+    if response.status_code == 200: #Checks if the API request was successfull 
+        data = response.json() 
         if data['drinks']:
-            drink = data['drinks'][0]
-            instructions = drink['strInstructions']
+            drink = data['drinks'][0] #First string of the list
+            instructions = drink['strInstructions'] # Retrieves the recipe for the drink
             drink_thumb = drink['strDrinkThumb']  # Image URL of the cocktail
             return instructions, drink_thumb
     return None, None  # Return None if no recipe is found
 
 # Load custom-trained model
+
 custom_model_path = "/Users/asya/Downloads/CocktailScanner/cocktail_model.keras"
 label_map_path = "/Users/asya/Downloads/CocktailScanner/label_map.txt"
 
