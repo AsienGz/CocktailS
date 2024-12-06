@@ -8,7 +8,7 @@ import os
 
 # Function to fetch cocktail recipe
 def get_cocktail_recipe(cocktail_name):
-    API_KEY = 'your_api_key'  # Replace with your API key
+    API_KEY = '9973533'  # API Key Pro Version
     BASE_URL = f"https://www.thecocktaildb.com/api/json/v2/{API_KEY}/search.php?s={cocktail_name}"
     response = requests.get(BASE_URL)
     if response.status_code == 200:
