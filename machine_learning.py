@@ -59,7 +59,7 @@ if uploaded_file:
         confidence = np.max(predictions) # Returns label with highest probability and its confidence score
         predicted_label = labels[np.argmax(predictions)]
         
-        predicted_label = predicted_label.encode ('utf-8').decode('utf-8')  # Handels special characters
+        predicted_label = predicted_label.encode ('utf-8').decode('utf-8')  # Handles special characters
 
         st.write(f"The uploaded image is classified as: **{predicted_label}** (Confidence: {confidence:.2f})")  # Displays result
 
