@@ -1,3 +1,7 @@
+#This is the main code, which uses implemnted machine learning, created in the file train_model.py
+#User needs to install tensorflow
+
+
 import streamlit as st
 from tensorflow.keras.models import load_model
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
