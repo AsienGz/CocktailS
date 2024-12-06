@@ -41,39 +41,32 @@ x = GlobalAveragePooling2D()(x)
 x = Dense(128, activation="relu")(x)  # Fully connected layer
 predictions = Dense(len(train_generator.class_indices), activation="softmax")(x)  # Output layer
 
-# Define the complete model
-model = Model(inputs=base_model.input, outputs=predictions)
+model = Model(inputs=base_model.input, outputs=predictions) # Defines the complete model
 
-# Freeze the base model layers
-for layer in base_model.layers:
+for layer in base_model.layers: # Prevents the weights of MobileNetV2 layers from being updated during training
     layer.trainable = False
 
-# Compile the model
-model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
+model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"]) # Uses the Adam optimizer for training and tracks accuracy
 
-# Save the best model during training
-checkpoint_path = "/Users/asya/Downloads/CocktailScanner/cocktail_model.keras"  # Save to the correct location
+checkpoint_path = "/Users/asya/Downloads/CocktailScanner/cocktail_model.keras"  # Saves the best model during training to correct location
 checkpoint = ModelCheckpoint(checkpoint_path, monitor="val_accuracy", save_best_only=True, verbose=1)
 
-# Train the model
-model.fit(
+model.fit(  # Trains the model
     train_generator,
     validation_data=validation_generator,
-    epochs=10,  # Adjust this as needed for better accuracy
+    epochs=10,  # Number of training iterations and we can adjust this for better accuracy
     callbacks=[checkpoint]
 )
 
-# Evaluate the model
-loss, accuracy = model.evaluate(validation_generator)
-print(f"Validation Accuracy: {accuracy:.2f}")
+loss, accuracy = model.evaluate(validation_generator) # Evaluates the model
+print(f"Validation Accuracy: {accuracy:.2f}") # Prints the validation accuracy
 
-# Save class labels for later use in the Streamlit app
-label_map = train_generator.class_indices
-label_map = {v: k for k, v in label_map.items()}  # Reverse the dictionary for easy lookup
+label_map = train_generator.class_indices # Saves class labels for later use in the Streamlit app
+label_map = {v: k for k, v in label_map.items()}  # Reverses the dictionary for easy lookup
 label_map_path = "/Users/asya/Downloads/CocktailScanner/label_map.txt"
 with open(label_map_path, "w", encoding="utf-8") as f:
     for key, value in label_map.items():
-        f.write(f"{key}:{value}\n")
+        f.write(f"{key}:{value}\n") # Saves the label map to a text file for later use in the Streamlit app
 print(f"Label map saved at '{label_map_path}'.")
 
 
