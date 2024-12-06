@@ -1,0 +1,7 @@
+0:Aperol Spritz
+1:Cosmopolitan
+2:Cuba Libre
+3:Espresso Martini
+4:Mojito
+5:Negroni
+6:Piña Colada
