@@ -32,7 +32,7 @@ label_map_path = "/Users/asya/Downloads/CocktailScanner/label_map.txt" # Lists t
 
 if os.path.exists(custom_model_path) and os.path.exists(label_map_path): # Checks if the file exists
     custom_model = load_model(custom_model_path) # Loads the model 
-    labels = {} # Empty dictionnary to store labels
+    labels = {} # Empty dictionary to store labels
     with open(label_map_path, "r", encoding="utf-8") as f:
         for line in f:
          key, value = line.strip().split(":") # Strips whitespace and splits the line at the colon
@@ -46,35 +46,32 @@ st.title("Cocktail Image Recognition")
 st.write("Upload an image of a cocktail to identify it!")
 
 # File uploader
+
 uploaded_file = st.file_uploader("Choose an image file", type=["jpg", "jpeg", "png"])
 if uploaded_file:
-    # Display the uploaded image
-    st.image(uploaded_file, caption="Uploaded Image", use_column_width=True)
+    
+    st.image(uploaded_file, caption="Uploaded Image", use_column_width=True) # Display the uploaded image
     try:
-        img = Image.open(uploaded_file).resize((224, 224))
-        img_array = np.expand_dims(np.array(img) / 255.0, axis=0)  # Normalize
+        img = Image.open(uploaded_file).resize((224, 224)) # Opens the uploaded pic using and resizes it
+        img_array = np.expand_dims(np.array(img) / 255.0, axis=0)  # Images pixels are normalized
 
-        # Predict
-        predictions = custom_model.predict(img_array)
-        confidence = np.max(predictions)
+        predictions = custom_model.predict(img_array) # Prediction
+        confidence = np.max(predictions) # Returns label with highest probability and its confidence score
         predicted_label = labels[np.argmax(predictions)]
         
-        # Safeguard against encoding issues
-        predicted_label = predicted_label.encode ('utf-8').decode('utf-8')
+        predicted_label = predicted_label.encode ('utf-8').decode('utf-8')  # Handels special characters
 
-        #Display the result
-        st.write(f"The uploaded image is classified as: **{predicted_label}** (Confidence: {confidence:.2f})")
+        st.write(f"The uploaded image is classified as: **{predicted_label}** (Confidence: {confidence:.2f})")  # Displays result
 
-        # Fetch recipe for the predicted cocktail
-        recipe, recipe_image = get_cocktail_recipe(predicted_label)
-        if recipe:
+        recipe, recipe_image = get_cocktail_recipe(predicted_label)  # Fetch recipe for the predicted cocktail
+        if recipe: # If recipe is found, then it's displayed
             st.write(f"**Recipe for {predicted_label}:**")
             st.write(recipe)
             st.image(recipe_image, caption=f"{predicted_label} Image")
         else:
-            st.write("No recipe found for the predicted cocktail.")
+            st.write("No recipe found for the predicted cocktail.") # If recipe is not found
 
     except Exception as e:
-        st.error(f"Error processing the image: {e}")
+        st.error(f"Error processing the image: {e}") # Shows errors if they occur during the process
 
 
