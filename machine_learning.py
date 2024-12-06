@@ -1,9 +1,9 @@
-#This is the main code, which uses implemnted machine learning, created in the file train_model.py
+#This is the main code, which uses implemented machine learning, created in the file train_model.py
 #User needs to install tensorflow
 
 
 import streamlit as st
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model #Tensorflow is an open source framework that we chose to use for image recognition because it provides tools and libraries for developing machine learning models
 from tensorflow.keras.applications.resnet50 import preprocess_input, decode_predictions
 import numpy as np
 from PIL import Image
